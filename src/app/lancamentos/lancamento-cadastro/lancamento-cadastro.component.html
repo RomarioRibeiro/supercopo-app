@@ -1,0 +1,58 @@
+<div class="container">
+  <form #form="ngForm">
+
+    <div class="grid">
+      <div class="col-12">
+        <h1>Lançamento</h1>
+      </div>
+
+
+
+      <div class="col-6 md:col-3 p-fluid">
+        <label >Data Produção</label>
+        <p-calendar name="vencimento" #vencimento  dateFormat="dd/mm/yy" [inline]=" false" [readonlyInput]="false" [showIcon]="false" [required]="true"></p-calendar>
+
+      </div>
+
+      <div class="col-6 md:col-3 p-fluid">
+        <label>Data Finalização</label>
+        <p-calendar dateFormat="dd/mm/yy" name="dataPagamento" ></p-calendar>
+      </div>
+
+      <div class="col-12 md:col-9 p-fluid">
+        <label>Descrição</label>
+        <input type="text" pInputText name="descricao" ngModel #descricao="ngModel" required minlength="5" >
+
+        <p-message *ngIf="descricao.hasError('required') && descricao.dirty" severity="error" text="Informe uma descrição"></p-message>
+
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Quantidade</label>
+        <p-inputNumber mode="currency" currency="BRL" locale="pt-BR" placeholder="0,00" ngModel [required]="true" ></p-inputNumber>
+      </div>
+
+      <div class="col-12 md:col-6 p-fluid">
+        <label>Model</label>
+        <p-dropdown [options]="models" placeholder="Selecione um Model" name="Model" #model [required]="true"></p-dropdown>
+      </div>
+
+      <div class="col-12 md:col-6 p-fluid">
+        <label>Pessoa</label>
+        <p-dropdown [options]="pessoa" placeholder="Selecione uma Pessoa" name="Model" #model [required]="true"></p-dropdown>
+      </div>
+
+      <div class="col-12 p-fluid">
+        <label>Obeservação</label>
+        <textarea type="text" pInputTextarea rows="3" name="observacao"></textarea>
+      </div>
+    </div>
+
+
+    <div class="col-12">
+      <button pButton type="submit" label="Salvar" class="p-button-info" [disabled]="!form.valid" ></button>
+      <button pButton type="button" label="Novo" class="p-button-info" ></button>
+      <a routerLink="/lancamentos">Volta para a  Pesquisa</a>
+    </div>
+
+  </form>
+</div>
