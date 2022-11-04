@@ -2,9 +2,18 @@ h1 {
   text-align: center;
 }
 
-img {
-  width: 1200px;
-  height: 600px;
-  padding: 0 auto;
 
+
+@media(min-width: 260px) {
+
+
+  img {
+    width: 100px;
+    height: 30x;
+    margin: 0 auto;
+
+
+
+  }
 }
+
