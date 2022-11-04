@@ -5,6 +5,9 @@ import { CommonModule } from "@angular/common";
 import { LancamentoPesquisarComponent } from "./lancamentos/lancamento-pesquisar/lancamento-pesquisar.component";
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { NavBarComponent } from "./core/nav-bar/nav-bar.component";
+import { HomeComponent } from './home/home.component';
+import { PessoasCadastrarComponent } from './pessoas/pessoas-cadastrar/pessoas-cadastrar.component';
+import { PessoasPesquisarComponent } from './pessoas/pessoas-pesquisar/pessoas-pesquisar.component';
 
 import {ButtonModule} from 'primeng/button';
 import {SidebarModule} from 'primeng/sidebar';
@@ -22,8 +25,7 @@ import { TabViewModule } from 'primeng/tabview';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
-import { PessoasPesquisarComponent } from './pessoas/pessoas-pesquisar/pessoas-pesquisar.component';
-import { PessoasCadastrarComponent } from './pessoas/pessoas-cadastrar/pessoas-cadastrar.component';
+import {ImageModule} from 'primeng/image';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { PessoasCadastrarComponent } from './pessoas/pessoas-cadastrar/pessoas-c
     NavBarComponent,
     LancamentoCadastroComponent,
     PessoasPesquisarComponent,
-    PessoasCadastrarComponent
+    PessoasCadastrarComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +55,8 @@ import { PessoasCadastrarComponent } from './pessoas/pessoas-cadastrar/pessoas-c
     FormsModule,
     InputNumberModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ImageModule
 
 
   ],
@@ -61,7 +65,8 @@ import { PessoasCadastrarComponent } from './pessoas/pessoas-cadastrar/pessoas-c
     NavBarComponent,
     LancamentoCadastroComponent,
     PessoasPesquisarComponent,
-    PessoasCadastrarComponent
+    PessoasCadastrarComponent,
+    HomeComponent
   ]
 })
 
