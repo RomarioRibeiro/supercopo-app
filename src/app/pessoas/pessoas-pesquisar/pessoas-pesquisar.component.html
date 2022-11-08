@@ -1,20 +1,26 @@
 <div class="container">
-  <div class="grid">
-    <div class="col-12">
-      <h1>Pessoa</h1>
-    </div>
-    <div class="col-12 p-fluid">
-      <label>Nome</label>
-      <input type="text" pInputText>
-    </div>
+  <form >
 
-    <div class="col-12">
-      <button pButton label="Pesquisar" type="button"> </button>
+    <div class="grid">
+
+      <div class="col-12">
+        <h1>Pessoa</h1>
+      </div>
+
+      <div class="col-12 p-fluid">
+        <label>Nome</label>
+        <input type="text" pInputText>
+      </div>
+
+      <div class="col-12">
+        <button pButton label="Pesquisar" type="button"> </button>
+      </div>
     </div>
+    </form>
 
     <div class="grid">
       <div class="col-12">
-        <p-table [value]="pessoas" responsiveLayout="scroll">
+        <p-table [value]="pessoas" [paginator]="true" [rows]="filtro.intensPorPagina" [lazy]="true" [totalRecords]="totalRegistro" (onLazyLoad)="oMudarPagina($event)" [responsive]="true" #tabela >
           <ng-template pTemplate="header">
               <tr>
                   <th>Nome</th>
@@ -23,17 +29,17 @@
                   <th></th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-pessoas>
+          <ng-template pTemplate="body" let-pessoa>
               <tr>
                   <td>
                     <span class="p-column-title">Nome</span>
-                    {{pessoas.nome}}</td>
+                    {{pessoa.nome}}</td>
                   <td>
                     <span class="p-column-title">Cargo</span>
-                    {{pessoas.cargo}}</td>
+                    {{pessoa.cargo}}</td>
                   <td>
                     <span class="p-column-title">Status</span>
-                    <a href="javascript:;" [pTooltip]="pessoas.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top" > {{pessoas.ativo ? 'Ativo' : 'Inativo'}}</a>
+                    <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tooltipPosition="top" > {{pessoa.ativo ? 'Ativo' : 'Inativo'}}</a>
                    </td>
                   <td>
                     <a class="col-button" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
@@ -56,5 +62,4 @@
       <button pButton label="Nova Pessoa" pTooltip="Nova Pessoa" tooltipPosition="top" routerLink="/pessoas/novo"></button>
       <a routerLink="/home">Pagina incial</a>
     </div>
-  </div>
 </div>
