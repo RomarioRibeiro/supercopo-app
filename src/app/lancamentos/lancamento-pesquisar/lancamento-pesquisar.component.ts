@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { LacamentoService, LancamentoFiltro } from './../lacamento.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
+import { Title } from '@angular/platform-browser';
+import { ErroHandlerService } from 'src/app/core/erro-handler.service';
 
 @Component({
   selector: 'app-lancamento-pesquisar',
@@ -7,20 +12,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LancamentoPesquisarComponent implements OnInit {
 
-lancamentos = [
-  {maquina: 'Maquina 1', nome: 'Romario Ribeiro', descricao: 'Taça Gin', quantidade: '1000', dataProd: '10/10/2022', dataVen: '10/11/2022'},
-  {maquina: 'Maquina 2', nome: 'Luiz Henrique', descricao: 'Tampa G', quantidade: '2000', dataProd: '10/10/2022', dataVen: '20/11/2022'},
-  {maquina: 'Maquina 3', nome: 'João das Couves', descricao: 'Caneca 300L', quantidade: '3000', dataProd: '10/10/2022', dataVen: '15/11/2022'},
-  {maquina: 'Maquina 4', nome: 'Maria da Silva', descricao: 'Long lingth', quantidade: '15000', dataProd: '10/10/2022', dataVen: '14/11/2022'},
-  {maquina: 'Maquina 5', nome: 'Mariane Oliveira', descricao: 'Tampa M', quantidade: '11000', dataProd: '10/10/2022', dataVen: '19/11/2022'},
-  {maquina: 'Maquina 6', nome: 'Talita Carvalio', descricao: 'Eco 400L', quantidade: '5000', dataProd: '10/10/2022', dataVen: '20/11/2022'},
-  {maquina: 'Maquina 7', nome: 'Mario Oliveira', descricao: 'Eco 600L', quantidade: '6000', dataProd: '10/10/2022', dataVen: '06/11/2022'}
-]
+lancamentos: any[] = []
 
+totalRegistros = 0;
+filtro = new LancamentoFiltro
 
-  constructor() { }
+@ViewChild('tabela') grid!: Table;
+
+  constructor(private lacamentoService: LacamentoService,
+    private title: Title,
+    private confimationService: ConfirmationService,
+    private errorHandlerService: ErroHandlerService,
+    private messagemService: MessageService,   ) { }
 
   ngOnInit(): void {
+
+    this.title.setTitle('Pesquisa de lançamentos')
+ /*    this.pesquisar(); */
   }
+
+  pesquisar(pagina = 0): void {
+    this.filtro.pagina = pagina;
+
+    this.lacamentoService.pesquisar(this.filtro)
+    .then(resultado => {
+      this.totalRegistros = resultado.total;
+      this.lancamentos = resultado.lancamentos;
+
+    })
+
+  }
+
+
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event!.first! / event!.rows!;
+    this.pesquisar(pagina)
+  }
+
+  confimacaoExclusao(lancamento: any) {
+    this.confimationService.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.excluir(lancamento);
+      }
+    })
+  }
+
+  excluir(lancamento: any) {
+    this.lacamentoService.excluir(lancamento.codigo)
+    .then(() =>{
+      if (this.grid.first === 0) {
+        this.pesquisar();
+      } else {
+        this.grid.reset();
+      }
+      this.messagemService.add({ severity: 'success', detail: 'Lançamento excluído com sucesso!' })
+  })
+  .catch(error => this.errorHandlerService.handler(error));;
+  }
+
 
 }

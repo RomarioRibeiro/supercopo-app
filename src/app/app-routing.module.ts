@@ -11,6 +11,7 @@ const router: Routes = [
 {path: 'home', component: HomeComponent},
 {path: 'lancamento', component: LancamentoPesquisarComponent},
 {path: 'lancamento/novo', component: LancamentoCadastroComponent},
+{path: 'lancamento/:codigo', component: LancamentoCadastroComponent},
 {path: 'pessoas', component: PessoasPesquisarComponent},
 {path: 'pessoas/novo', component: PessoasCadastrarComponent}
 

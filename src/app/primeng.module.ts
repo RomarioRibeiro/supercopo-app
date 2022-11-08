@@ -1,7 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { LancamentoPesquisarComponent } from "./lancamentos/lancamento-pesquisar/lancamento-pesquisar.component";
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { NavBarComponent } from "./core/nav-bar/nav-bar.component";
@@ -20,12 +20,17 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { AccordionModule } from 'primeng/accordion'; // accordion and accordion tab
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { TabViewModule } from 'primeng/tabview';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {ImageModule} from 'primeng/image';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
+import { ErroHandlerService } from './core/erro-handler.service';
+import { Title } from '@angular/platform-browser';
+
 
 
 @NgModule({
@@ -35,7 +40,8 @@ import {ImageModule} from 'primeng/image';
     LancamentoCadastroComponent,
     PessoasPesquisarComponent,
     PessoasCadastrarComponent,
-    HomeComponent
+    HomeComponent,
+
   ],
   imports: [
     CommonModule,
@@ -56,8 +62,20 @@ import {ImageModule} from 'primeng/image';
     InputNumberModule,
     DropdownModule,
     InputTextareaModule,
-    ImageModule
+    ImageModule,
+    ConfirmDialogModule,
+    ToastModule
 
+
+
+  ],
+  providers: [
+    ErroHandlerService,
+    MessageService,
+    ConfirmationService,
+
+    Title,
+    DatePipe,
 
   ],
   exports: [
@@ -66,7 +84,8 @@ import {ImageModule} from 'primeng/image';
     LancamentoCadastroComponent,
     PessoasPesquisarComponent,
     PessoasCadastrarComponent,
-    HomeComponent
+    HomeComponent,
+
   ]
 })
 

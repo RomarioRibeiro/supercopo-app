@@ -2,3 +2,12 @@
 <app-nav-bar *ngIf="exibindoNavbar()"></app-nav-bar>
 <router-outlet></router-outlet>
 <!-- <app-lancamento-pesquisar></app-lancamento-pesquisar> -->
+
+<p-toast></p-toast>
+
+<p-confirmDialog header="Confirmação" icon="pi pi-question-circle" #confirmacao>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" label="Sim" style="background-color: green ;"(click)="confirmacao.accept()"></button>
+    <button type="button" pButton icon="pi pi-times" label="Não" style="background-color: red ;" (click)="confirmacao.reject()"></button>
+  </p-footer>
+</p-confirmDialog>

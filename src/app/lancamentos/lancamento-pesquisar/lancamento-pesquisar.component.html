@@ -1,4 +1,5 @@
 <div class="container">
+  <form (ngSubmit)="pesquisar()">
   <div class="grid">
 
     <div class="col-12">
@@ -7,16 +8,16 @@
 
     <div class="col-12 p-fluid">
       <label >Descrição</label>
-      <input type="text" pInputText />
+      <input type="text" pInputText name="descricao" [(ngModel)]="filtro.descricao"  />
     </div>
 
     <div class="col-12 ">
       <label  style="display: block;">Produção Final</label>
 
-      <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width: '100px'}"></p-calendar>
+      <p-calendar dateFormat="dd-mm-yy" [inputStyle]="{width: '100px'}" name="datafinalizacaoInicio" [(ngModel)]="filtro.dataFinalizacaoInico" ></p-calendar>
 
       <label class="label"> até </label>
-      <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{width: '100px'}"></p-calendar>
+      <p-calendar dateFormat="dd-mm-yy" [inputStyle]="{width: '100px'}" name="datafinalizacaoFim" [(ngModel)]="filtro.dataFinaizacaoFim" ></p-calendar>
     </div>
 
     <div class="col-12">
@@ -25,10 +26,11 @@
     </div>
 
   </div>
+</form>
 
   <div class="grid">
     <div class="col-12">
-      <p-table [value]="lancamentos" [responsive]="true" >
+      <p-table [value]="lancamentos" [responsive]="true" [paginator]="true" [rows]="filtro.intensPorPagina" [lazy]="true" (onLazyLoad)="aoMudarPagina($event)" [totalRecords]="totalRegistros" #tabela >
         <ng-template pTemplate="header">
             <tr>
                 <th class="p-colum-title">Maquina</th>
@@ -40,17 +42,35 @@
                 <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-lancamentos>
+        <ng-template pTemplate="body" let-lancamento>
             <tr>
-                <td>{{lancamentos.maquina}}</td>
-                <td>{{lancamentos.nome}}</td>
-                <td>{{lancamentos.descricao}}</td>
-                <td>{{lancamentos.quantidade}}</td>
-                <td>{{lancamentos.dataProd}}</td>
-                <td>{{lancamentos.dataVen}}</td>
+                <td>
+                  <span class="p-column-title">Maquina</span>
+                  {{lancamento.maquina}}</td>
+
+                <td>
+                  <span class="p-column-title">Pessoa</span>
+                  {{lancamento.pessoa}}</td>
+
+                <td>
+                  <span class="p-column-title">Descrição</span>
+                  {{lancamento.descricao}}</td>
+
+                <td>
+                  <span class="p-column-title">Quantidade</span>
+                  {{lancamento.quantidade }}</td>
+
+                <td>
+                  <span class="p-column-title">Data Prod.</span>
+                  {{lancamento.dataProducao | date: 'dd/MM/y'}}</td>
+
+                <td>
+                  <span class="p-column-title">Data Final.</span>
+                  {{lancamento.dataFinalizacao | date: 'dd/MM/y'}}</td>
+
                 <td class="col-acoes">
-                  <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-                  <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+                  <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/lancamento', lancamento.codigo]"></a>
+                  <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confimacaoExclusao(lancamento)"></button>
                 </td>
             </tr>
         </ng-template>

@@ -1,16 +1,35 @@
-import { AppRoutingModule } from './app-routing.module';
-
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { LancamentoPesquisarComponent } from './lancamentos/lancamento-pesquisar/lancamento-pesquisar.component';
-import { NavBarComponent } from './core/nav-bar/nav-bar.component';
-import { PrimengModule } from './primeng.module';
-
+import { ErroHandlerService } from './core/erro-handler.service';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MessageService, ConfirmationService } from 'primeng/api';
+
+
+
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+import { PrimengModule } from './primeng.module';
 import { environment } from '../environments/environment';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
+
+
+
+
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -22,7 +41,14 @@ import { environment } from '../environments/environment';
     BrowserModule,
     PrimengModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
+    MessagesModule,
+    MessageModule,
+    RouterModule,
+    ConfirmDialogModule,
+    ToastModule,
+
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
@@ -31,7 +57,13 @@ import { environment } from '../environments/environment';
     })
   ],
   providers: [
-    PrimengModule
+    ErroHandlerService,
+    MessageService,
+    ConfirmationService,
+
+    Title,
+    DatePipe,
+
   ],
   bootstrap: [AppComponent]
 })
