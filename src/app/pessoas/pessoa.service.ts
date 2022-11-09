@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { Pessoa } from '../core/lancamento.model';
 
 export class PessoaFiltro {
   nome?: string;
@@ -18,7 +20,7 @@ export class PessoaService {
     throw new Error('Method not implemented.');
   }
 
-  pessoasUrl = 'http://localhost:8080/pessoas';
+  pessoasUrl = 'https://supercopo-app.herokuapp.com/pessoas';
 
   constructor(
     private http: HttpClient,
@@ -56,5 +58,58 @@ export class PessoaService {
       .toPromise()
 
   }
+
+  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
+    const headers = new HttpHeaders()
+
+      .append('Content-Type', 'application/json');
+
+    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, ativo, { headers })
+      .toPromise();
+
+  }
+
+
+  buscarPorCodigo(codigo: number): Promise<Pessoa> {
+    const headers = new HttpHeaders()
+        .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+
+        return firstValueFrom(this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`, { headers }))
+
+  }
+
+  adicionarPessoa(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new HttpHeaders()
+
+      .append('Content-Type', 'application/json');
+
+    return firstValueFrom(this.http.post<Pessoa>(this.pessoasUrl, pessoa, { headers }));
+  }
+
+
+  atualizarPessoa(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new HttpHeaders()
+
+      .append('Content-Type', 'application/json');
+
+    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, { headers })
+      .toPromise()
+      .then((response: any) => {
+
+
+        return response;
+      });
+  }
+
+
+
+  excluir(codigo: number): Promise<any> {
+
+
+    return this.http.delete(`${this.pessoasUrl}/${codigo}`)
+      .toPromise()
+      .then(() => null);
+  }
+
 
 }

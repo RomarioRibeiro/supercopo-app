@@ -19,7 +19,7 @@ export class LancamentoFiltro {
 export class LacamentoService {
 
 
-  lancamentosURL = 'http://localhost:8080/lancamentos'
+  lancamentosURL = 'https://supercopo-app.herokuapp.com/'
 
 
   constructor( private http: HttpClient,

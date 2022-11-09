@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class MaquinaService {
 
-  maquinasURL = 'http://localhost:8080/maquinas';
+  maquinasURL = 'https://supercopo-app.herokuapp.com/maquinas';
 
   constructor(private http: HttpClient) { }
 

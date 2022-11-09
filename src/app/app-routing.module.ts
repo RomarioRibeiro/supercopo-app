@@ -13,7 +13,9 @@ const router: Routes = [
 {path: 'lancamento/novo', component: LancamentoCadastroComponent},
 {path: 'lancamento/:codigo', component: LancamentoCadastroComponent},
 {path: 'pessoas', component: PessoasPesquisarComponent},
-{path: 'pessoas/novo', component: PessoasCadastrarComponent}
+{path: 'pessoas/novo', component: PessoasCadastrarComponent},
+{path: 'pessoas/:codigo', component: PessoasCadastrarComponent}
+
 
 
 ]
