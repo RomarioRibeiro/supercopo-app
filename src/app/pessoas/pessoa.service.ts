@@ -50,14 +50,13 @@ export class PessoaService {
       });
 }
 
+listarPessoa(): Promise<any> {
 
-  listarPessoa(): Promise<any> {
 
-
-    return this.http.get(`${this.pessoasUrl}`)
-      .toPromise()
-
-  }
+  return this.http.get(`${this.pessoasUrl}`)
+    .toPromise()
+    .then((response: any) => response['content']);
+}
 
   mudarStatus(codigo: number, ativo: boolean): Promise<void> {
     const headers = new HttpHeaders()

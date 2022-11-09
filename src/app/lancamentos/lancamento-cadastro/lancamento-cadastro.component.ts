@@ -71,6 +71,7 @@ export class LancamentoCadastroComponent implements OnInit {
     })
   }
 
+
 get editando() {
   return Boolean(this.lancamento.codigo);
 }
